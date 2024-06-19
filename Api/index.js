@@ -25,3 +25,14 @@ app.listen(4000,()=>{
 app.use(express.json())
 app.use('/api',router);
 app.use('/api/auth', authrouter)
+
+app.use((err,req,res,next)=>{
+    const statuscode = err.statuscode || 500;
+    const message = err.message || "internal server error"
+    return res.json({
+        success : false,
+        statuscode,
+        message 
+    })
+})
+
